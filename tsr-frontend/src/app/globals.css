@@ -1,4 +1,4 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
@@ -123,4 +123,52 @@
   body {
     @apply bg-background text-foreground;
   }
+} */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --color-lambda-bg: #0a0a0a;
+  --color-lambda-bg-elevated: #111111;
+  --color-lambda-cream: #e8e4d9;
+  --color-lambda-cream-dark: #c8c4b9;
+  --color-lambda-accent: #b8a9ff;
+  --color-lambda-text-primary: #e8e4d9;
+  --color-lambda-text-secondary: #888880;
+  --color-lambda-text-muted: #555550;
+  --color-lambda-border: #222222;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-lambda-border);
+  }
+
+  body {
+    background-color: var(--color-lambda-bg);
+    color: var(--color-lambda-text-primary);
+    font-family: var(--font-sans);
+  }
+}
+
+.font-mono-display {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -1,10 +1,8 @@
-// Used in: src/app/(website)/page.tsx - Pricing plans section
+// Used in: src/app/(website)/page.tsx - Pricing plans (Lambda minimal style)
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, Plus } from "lucide-react";
 
-// Pricing plan type definition
 interface PricingPlan {
   name: string;
   price: string;
@@ -17,7 +15,6 @@ interface PricingPlan {
   badge?: string;
 }
 
-// Plans config - update pricing here only
 const PLANS: PricingPlan[] = [
   {
     name: "Starter",
@@ -28,7 +25,7 @@ const PLANS: PricingPlan[] = [
       "1 Instagram Account",
       "Auto Follow/Unfollow",
       "Basic DM Automation",
-      "Post Scheduling (15/month)",
+      "Post Scheduling (15/mo)",
       "Weekly Analytics Report",
       "Email Support",
     ],
@@ -79,82 +76,97 @@ const PLANS: PricingPlan[] = [
 
 export default function PricingSection() {
   return (
-    <section id="pricing" className="py-24 border-t border-white/5">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+    <section id="pricing" className="py-24 border-t border-lambda-border">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">
+        <div className="mb-16">
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-lambda-text-muted mb-4">
+            Pricing
+          </p>
+          <h2 className="text-4xl md:text-5xl font-black text-lambda-cream tracking-tight mb-4">
             Choose Your Plan
           </h2>
-          <p className="text-base text-zinc-400">
-            Select the perfect plan to boost your Instagram engagement
+          <p className="text-sm text-lambda-text-secondary">
+            Select the perfect plan to boost your Instagram engagement.
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-lambda-border">
           {PLANS.map((plan) => (
             <div
               key={plan.name}
-              className={`relative rounded-2xl p-7 flex flex-col transition-all duration-300 ${
-                plan.highlighted
-                  ? "bg-[#4f6ef7]/10 border-2 border-[#4f6ef7]/60 shadow-xl shadow-[#4f6ef7]/10"
-                  : "bg-white/[0.03] border border-white/8 hover:border-white/15"
-              }`}
+              className={cn(
+                "relative p-8 md:p-10 border-b md:border-b-0 md:border-r last:border-r-0 border-lambda-border",
+                plan.highlighted && "bg-lambda-cream/[0.03]",
+              )}
             >
-              {/* Popular Badge */}
+              {/* Badge */}
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold bg-[#4f6ef7] text-white rounded-full px-3 py-1">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-lambda-accent bg-lambda-accent/10 border border-lambda-accent/30 px-3 py-1 absolute top-4 right-4">
                   {plan.badge}
                 </span>
               )}
 
-              {/* Plan Header */}
-              <div className="mb-6">
-                <h3 className="text-base font-bold text-white mb-3">
-                  {plan.name}
-                </h3>
-                <div className="flex items-end gap-1 mb-2">
-                  <span className="text-4xl font-black text-white">
-                    {plan.price}
-                  </span>
-                  <span className="text-zinc-500 text-sm mb-1.5">
-                    {plan.period}
-                  </span>
-                </div>
-                <p className="text-xs text-zinc-500">{plan.description}</p>
+              {/* Plan Name */}
+              <p className="font-mono text-xs uppercase tracking-widest text-lambda-text-muted mb-6">
+                {plan.name}
+              </p>
+
+              {/* Price */}
+              <div className="flex items-end gap-1 mb-2">
+                <span className="text-4xl font-black text-lambda-cream">
+                  {plan.price}
+                </span>
+                <span className="font-mono text-xs text-lambda-text-muted mb-1.5">
+                  {plan.period}
+                </span>
               </div>
 
+              <p className="text-xs text-lambda-text-secondary mb-8">
+                {plan.description}
+              </p>
+
               {/* Features */}
-              <ul className="space-y-2.5 mb-7 flex-1">
+              <ul className="space-y-3 mb-8">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2.5">
-                    <Check className="w-3.5 h-3.5 text-[#7b93f8] flex-shrink-0" />
-                    <span className="text-xs text-zinc-300">{feature}</span>
+                  <li key={feature} className="flex items-center gap-3">
+                    <Check className="w-3.5 h-3.5 text-lambda-cream flex-shrink-0" />
+                    <span className="font-mono text-xs uppercase tracking-wider text-lambda-text-secondary">
+                      {feature}
+                    </span>
                   </li>
                 ))}
               </ul>
 
               {/* CTA */}
-              <Button
-                asChild
-                className={`w-full rounded-lg text-sm font-semibold h-10 ${
+              <Link
+                href={plan.href}
+                className={cn(
+                  "font-mono text-xs uppercase tracking-widest block text-center py-3 px-6 transition-colors duration-200",
                   plan.highlighted
-                    ? "bg-[#4f6ef7] hover:bg-[#3a59e8] text-white"
-                    : "bg-white/8 hover:bg-white/15 text-white border border-white/10"
-                }`}
+                    ? "bg-lambda-cream text-lambda-bg hover:bg-lambda-cream-dark"
+                    : "border border-lambda-border text-lambda-cream hover:bg-lambda-cream/5",
+                )}
               >
-                <Link href={plan.href}>{plan.cta}</Link>
-              </Button>
+                <span className="flex items-center justify-center gap-2">
+                  {plan.cta}
+                  <Plus className="w-3.5 h-3.5" />
+                </span>
+              </Link>
             </div>
           ))}
         </div>
 
         {/* Trust note */}
-        <p className="text-center text-xs text-zinc-600 mt-8">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-lambda-text-muted text-center mt-8">
           7-day free trial · No credit card required · Cancel anytime
         </p>
       </div>
     </section>
   );
+}
+
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(" ");
 }
